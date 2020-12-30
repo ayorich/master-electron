@@ -1,4 +1,5 @@
 //modules
+const { shell } = require("electron");
 const fs = require("fs");
 
 //dom node
@@ -91,6 +92,21 @@ exports.changeSelection = (direction) => {
     currentItem.node.classList.remove("selected");
     currentItem.node.nextElementSibling.classList.add("selected");
   }
+};
+
+//open selected item in native broswer
+exports.openNative = () => {
+  //only if we have items (in case of menu open)
+  if (!this.storage.length) return;
+
+  //get selected item
+  let selectedItem = this.getSelectedItem();
+
+  //get item's url
+  let contentUrl = selectedItem.node.dataset.url;
+
+  //open in user's default browser
+  shell.openExternal(contentUrl);
 };
 
 // open selected item

@@ -10,9 +10,34 @@ addItem = document.getElementById("add-item");
 itemUrl = document.getElementById("url");
 search = document.getElementById("search");
 
+//open modal from menu
+ipcRenderer.on("menu-show-modal", () => {
+  showModal.click();
+});
+
+//open selected item from menu
+ipcRenderer.on("menu-open-item", () => {
+  items.open();
+});
+
+//delete selected item from menu
+ipcRenderer.on("menu-delete-item", () => {
+  let selectedItem = items.getSelectedItem();
+  items.delete(selectedItem.index);
+});
+
+//open item in native browser from menu
+ipcRenderer.on("menu-open-item-native", () => {
+  items.openNative();
+});
+
+//focus the search input frommenu
+ipcRenderer.on("menu-focus-search", () => {
+  search.focus();
+});
 //filter items with 'search'
 search.addEventListener("keyup", (e) => {
-  //load items
+  //loop items
   Array.from(document.getElementsByClassName("read-item")).forEach((item) => {
     //hide  items that don't match search value
     let hasMatch = item.innerText.toLowerCase().includes(search.value);
