@@ -1,14 +1,15 @@
 {
   "name": "master-electron",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Master Electron Project",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "watch": "nodemon --exec electron .",
     "reset": "git reset --hard",
-    "build":"electron-builder -w",
-    "win-cert":"electron-builder create-self-signed-cert -p ayorichtv"
+    "build": "electron-builder -w",
+    "release": "electron-builder -w -p 'onTagOrDraft'",
+    "win-cert": "electron-builder create-self-signed-cert -p ayorichtv"
   },
   "repository": "https://github.com/ayorich/master-electron.git",
   "homepage": "https://github.com/ayorich/master-electron.git",
@@ -25,24 +26,23 @@
   },
   "dependencies": {
     "colors": "^1.4.0",
+    "electron-log": "^4.3.1",
+    "electron-updater": "^4.3.5",
     "electron-window-state": "^5.0.3"
   },
-  "build":{
-"appId":"com.buyweb.app",
-"copyright":"Copyright 2021 master.electron",
-
-"win":{
-   "target": [
+  "build": {
+    "appId": "com.buyweb.app",
+    "copyright": "Copyright 2021 master.electron",
+    "publish": {
+      "provider": "github"
+    },
+    "win": {
+      "target": [
         "nsis"
-      ],
-"certificateFile":"private/ayorichtv.pfx",
-"certificatePassword":"",
-"verifyUpdateCodeSignature":false,
-"publisherName":"ayorichtv"
-
-},
-"linux":{
-"category":"Utility"
-}
+      ]
+    },
+    "linux": {
+      "category": "Utility"
+    }
   }
 }
